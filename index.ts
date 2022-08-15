@@ -19,10 +19,38 @@ app.post("/", async (req: Request, res: Response) => {
     res.json({ user });
 });
 
+app.post("/createMany", async (req: Request, res: Response) => {
+    const { userList } = req.body;
+    const users = await prisma.user.createMany({
+        data: userList
+    });
+
+    res.json({ users });
+});
+
+// app.get("/", async (req: Request, res: Response) => {
+//     const users = await prisma.user.findMany();
+//     res.json({ users });
+// });
+
+app.get("/:id", async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const users = await prisma.user.findUnique({
+        where: {
+            id: id
+        }
+    });
+    res.json({ users });
+});
 
 app.get("/", async (req: Request, res: Response) => {
-    const users = await prisma.user.findMany();
-    res.json({ users });
+    const userCars = await prisma.user.findMany({
+        include: {
+            cars: true
+        }
+    });
+
+    res.json({ userCars });
 });
 
 
@@ -55,8 +83,21 @@ app.delete("/:id", async (req: Request, res: Response) => {
     res.json({ deletedUser });
 });
 
+// Cars
+app.post("/car", async (req: Request, res: Response) => {
 
+    const { model, year, userId } = req.body;
+    const car = await prisma.car.create({
+        data: {
+            model: model,
+            year: year,
+            userId: userId
+        }
+    });
 
+    res.json({ car });
+
+});
 
 app.get("/", (req: Request, res: Response) => { });
 
