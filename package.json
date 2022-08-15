@@ -3,7 +3,8 @@
   "version": "v1.0.0",
   "main": "index.ts",
   "scripts": {
-      "start": "nodemon"
+      "start": "nodemon",
+      "test": ""
   },
   "dependencies": {
     "@prisma/client": "4.2.1",
