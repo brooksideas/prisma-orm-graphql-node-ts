@@ -26,9 +26,10 @@ app.get("/", async (req: Request, res: Response) => {
 });
 
 
-app.patch("/", async (req: Request, res: Response) => {
+app.patch("/:id", async (req: Request, res: Response) => {
 
-    const { id, username } = req.body;
+    const { id } = req.params;
+    const { username } = req.body;
 
     const updateUser = await prisma.user.update({
         where: {
